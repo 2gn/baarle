@@ -6,6 +6,36 @@
 
     crane.url = "github:ipetkov/crane";
 
+    dnsglobe = {
+      url = "github:514-labs/dnsglobe";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    concord = {
+      url = "github:chojs23/concord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    pwndbg = {
+      url = "github:pwndbg/pwndbg";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    diskwatch = {
+      url = "github:matthart1983/diskwatch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    vortix = {
+      url = "github:Harry-kp/vortix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mandible = {
+      url = "github:AS-FOSS/mandible";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,6 +80,17 @@
 
       treefmtEval = forAllSystems ({ pkgs, ... }: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
 
+      # Re-export the default package of every input under the input's own name,
+      # so `nix build .#vortix` works for anything already vendored here.
+      # Inputs without a `default` package for the given system (nixpkgs, crane,
+      # treefmt-nix, non-flake inputs, ...) are skipped instead of erroring.
+      packagesFromInputs =
+        system:
+        # `self` is dropped first, otherwise `self.packages` would depend on us.
+        lib.mapAttrs (_name: input: input.packages.${system}.default) (lib.filterAttrs (
+          _name: input: lib.hasAttr "default" ((input.packages or { }).${system} or { })
+        ) (builtins.removeAttrs inputs [ "self" ]));
+
       # Auto-discover every `packages/<name>/package.nix` and build it with
       # `craneLib` in scope, which the crane-based packages require.
       #
@@ -67,7 +108,11 @@
         };
     in
     {
-      packages = forAllSystems ({ pkgs, ... }: packagesFromPkgsDir pkgs);
+      packages = forAllSystems (
+        { pkgs, system, ... }:
+        # `packages/` wins on name clashes with an input.
+        lib.mergeAttrs (packagesFromInputs system) (packagesFromPkgsDir pkgs)
+      );
       overlays.default = final: _prev: packagesFromPkgsDir final;
 
       formatter = forAllSystems ({ system, ... }: treefmtEval.${system}.config.build.wrapper);
