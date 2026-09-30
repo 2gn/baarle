@@ -1,37 +1,37 @@
-[![Garnix CI build status](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fsoopyc%2Fmystia%3Fbranch%3Dmistress&label=Garnix%20CI&color=%2300AAFF)](https://opencollective.com/garnix_io)
+[![Garnix CI build status](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2F2gn%2Fbaarle%3Fbranch%3Dmistress&label=Garnix%20CI&color=%2300AAFF)](https://opencollective.com/garnix_io)
 
 <hr/>
 
-# mystia
+# baarle
 
 just a bunch of packages, and a sandbox for stuff that we might upstream later.
 
 ## what's inside?
 
-run `nix flake show github:soopyc/mystia`
+run `nix flake show github:2gn/baarle`
 
 ## usage
 
-slide `github:soopyc/mystia` into your flake inputs like so
+slide `github:2gn/baarle` into your flake inputs like so
 
 ```nix
 {
   inputs = {
     # ...
-    mystia.url = "github:soopyc/mystia";
-    mystia.inputs.nixpkgs.follows = "nixpkgs";
+    baarle.url = "github:2gn/baarle";
+    baarle.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
 ```
 
-then add inputs or just mystia to your specialArgs
+then add inputs or just baarle to your specialArgs
 
 ```nix
 {
   nixosConfigurations = {
     system = lib.nixosSystem {
       specialArgs = {
-        inherit mystia;
+        inherit baarle;
       };
     };
   };
@@ -41,9 +41,9 @@ then add inputs or just mystia to your specialArgs
 <!--
 and add the overlay in your nixos config
 ```nix
-{ mystia, pkgs, ... }:
+{ baarle, pkgs, ... }:
 {
-  nixpkgs.overlays = [ mystia.overlays.default ];
+  nixpkgs.overlays = [ baarle.overlays.default ];
 }
 ```
 -->
@@ -51,9 +51,9 @@ and add the overlay in your nixos config
 Add/use packages and modules as needed.
 
 ```nix
-{mystia, ...}: {
+{baarle, ...}: {
   imports = [
-    mystia.nixosModules.arrpc
+    baarle.nixosModules.arrpc
   ];
 }
 ```
