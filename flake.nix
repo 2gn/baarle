@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-26.05";
 
+    crane.url = "github:ipetkov/crane";
+
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +25,7 @@
     {
       self,
       nixpkgs,
+      crane,
       treefmt-nix,
       nix-update-soopy,
       ...
@@ -46,10 +49,26 @@
         );
 
       treefmtEval = forAllSystems ({ pkgs, ... }: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
+
+      # Auto-discover every `packages/<name>/package.nix` and build it with
+      # `craneLib` in scope, which the crane-based packages require.
+      #
+      # `lib` is deliberately taken from the nixpkgs input rather than from
+      # `pkgs`: when used as an overlay, `pkgs` is `final`, and resolving
+      # `final.lib` would force the overlay's own result and recurse forever.
+      packagesFromPkgsDir =
+        pkgs:
+        let
+          craneLib = crane.mkLib pkgs;
+        in
+        lib.filesystem.packagesFromDirectoryRecursive {
+          callPackage = lib.callPackageWith (pkgs // { inherit craneLib; });
+          directory = ./packages;
+        };
     in
     {
-      packages = forAllSystems ({ pkgs, ... }: import ./packages/all-packages.nix inputs { } pkgs);
-      overlays.default = import ./packages/all-packages.nix inputs;
+      packages = forAllSystems ({ pkgs, ... }: packagesFromPkgsDir pkgs);
+      overlays.default = final: _prev: packagesFromPkgsDir final;
 
       formatter = forAllSystems ({ system, ... }: treefmtEval.${system}.config.build.wrapper);
       checks = forAllSystems (
@@ -66,6 +85,7 @@
             packages = [
               nix-update-soopy.packages.${system}.default
 
+              pkgs.nvfetcher
               pkgs.nix-fast-build
               pkgs.ratchet
             ];
@@ -73,23 +93,12 @@
         }
       );
 
-      nixosModules = {
-        fixups = lib.modules.importApply ./modules/fixups { };
-        vmauth = lib.modules.importApply ./modules/vmauth { };
-        arrpc = lib.modules.importApply ./modules/arrpc { };
-        bsky-pds = lib.modules.importApply ./modules/bsky-pds { };
-        mautrix-discord = lib.modules.importApply ./modules/mautrix-discord.nix { };
-        anubis = lib.modules.importApply ./modules/anubis { inherit self; };
-        stalwart-minimal = lib.modules.importApply ./modules/stalwart-minimal.nix;
-      };
+      # nixosModules = {
+      # };
 
-      nixosTests = forAllSystems (
-        { pkgs, ... }:
-        {
-          anubis = pkgs.callPackage ./tests/anubis.nix { } {
-            module = self.nixosModules.anubis;
-          };
-        }
-      );
+      # nixosTests = forAllSystems (
+      #   { pkgs, ... }:
+      #   {}
+      # );
     };
 }

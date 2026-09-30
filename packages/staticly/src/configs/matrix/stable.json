@@ -1,8 +1,0 @@
-{
-    "m.homeserver": {
-        "base_url": "https://nue.soopy.moe"
-    },
-    "org.matrix.msc3575.proxy": {
-        "url": "https://sliding.proxy.production.matrix.soopy.moe"
-    }
-}

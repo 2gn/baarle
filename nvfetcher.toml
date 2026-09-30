@@ -1,0 +1,104 @@
+[lazyrsync]
+src.github = "westpoint-io/lazyrsync"
+fetch.github = "westpoint-io/lazyrsync"
+
+[usbtree]
+src.github = "gnomeria/usbtree"
+fetch.github = "gnomeria/usbtree"
+
+[flyline]
+src.github = "HalFrgrd/flyline"
+fetch.github = "HalFrgrd/flyline"
+
+[dskditto]
+src.github = "jdefrancesco/dskDitto"
+fetch.github = "jdefrancesco/dskDitto"
+
+[flow]
+src.github = "programmersd21/flow"
+fetch.github = "programmersd21/flow"
+
+[keyward]
+src.github = "gateway-of-last-resort/keyward"
+fetch.github = "gateway-of-last-resort/keyward"
+
+[codemark]
+src.github = "DanielCardonaRojas/codemark"
+fetch.github = "DanielCardonaRojas/codemark"
+
+[gotz]
+src.github = "merschformann/gotz"
+fetch.github = "merschformann/gotz"
+
+[haranoaji]
+src.github_tag = "trueroad/HaranoAjiFonts"
+fetch.github = "trueroad/HaranoAjiFonts"
+
+[herald]
+src.github_tag = "herald-email/herald-mail-app"
+fetch.github = "herald-email/herald-mail-app"
+
+[astroterm]
+src.github = "da-luce/astroterm"
+fetch.url = "https://github.com/da-luce/astroterm/releases/download/$ver/astroterm-linux-x86_64"
+
+[lazycut]
+src.github = "emin-ozata/lazycut"
+fetch.github = "emin-ozata/lazycut"
+
+[redthread]
+src.git = "https://github.com/B33pBeeps/redthread"
+src.branch = "main"
+fetch.git = "https://github.com/B33pBeeps/redthread"
+
+[rura]
+src.github = "tlipinski/rura"
+fetch.github = "tlipinski/rura"
+
+[omm]
+src.github = "dhth/omm"
+fetch.github = "dhth/omm"
+
+[sheets]
+src.github = "maaslalani/sheets"
+fetch.github = "maaslalani/sheets"
+
+[sot]
+src.github = "anistark/sot"
+fetch.github = "anistark/sot"
+
+[pwdsafety]
+src.github = "edoardottt/pwdsafety"
+fetch.github = "edoardottt/pwdsafety"
+
+[podliner]
+src.github = "timkicker/podliner"
+fetch.github = "timkicker/podliner"
+
+[superseedr]
+src.github = "Jagalite/superseedr"
+fetch.github = "Jagalite/superseedr"
+
+[wstui]
+src.github_tag = "NullSeile/wstui"
+fetch.github = "NullSeile/wstui"
+
+[watui]
+src.github = "Guistoff081/watui"
+fetch.github = "Guistoff081/watui"
+
+[drydock]
+src.github = "yetidevworks/drydock"
+fetch.github = "yetidevworks/drydock"
+
+[linecast]
+src.github = "ashuttl/linecast"
+fetch.github = "ashuttl/linecast"
+
+[countryfetch]
+src.github = "nik-rev/countryfetch"
+fetch.github = "nik-rev/countryfetch"
+
+[act3]
+src.github = "dhth/act3"
+fetch.github = "dhth/act3"
