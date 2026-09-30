@@ -86,10 +86,12 @@
       # treefmt-nix, non-flake inputs, ...) are skipped instead of erroring.
       packagesFromInputs =
         system:
-        # `self` is dropped first, otherwise `self.packages` would depend on us.
-        lib.mapAttrs (_name: input: input.packages.${system}.default) (lib.filterAttrs (
-          _name: input: lib.hasAttr "default" ((input.packages or { }).${system} or { })
-        ) (builtins.removeAttrs inputs [ "self" ]));
+        let
+          mapped = lib.mapAttrs (_name: input: (input.packages or { }).${system}.default or null) (
+            builtins.removeAttrs inputs [ "self" ]
+          );
+        in
+        lib.filterAttrs (_: v: v != null) mapped;
 
       # Auto-discover every `packages/<name>/package.nix` and build it with
       # `craneLib` in scope, which the crane-based packages require.
@@ -113,7 +115,11 @@
         # `packages/` wins on name clashes with an input.
         lib.mergeAttrs (packagesFromInputs system) (packagesFromPkgsDir pkgs)
       );
-      overlays.default = final: _prev: packagesFromPkgsDir final;
+      # The system is read from `prev`, not `final`: `final` already includes this
+      # overlay, so touching it while building the overlay's result would recurse.
+      overlays.default =
+        final: prev:
+        lib.mergeAttrs (packagesFromInputs prev.stdenv.hostPlatform.system) (packagesFromPkgsDir final);
 
       formatter = forAllSystems ({ system, ... }: treefmtEval.${system}.config.build.wrapper);
       checks = forAllSystems (
