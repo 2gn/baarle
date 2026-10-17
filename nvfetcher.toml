@@ -102,3 +102,7 @@ fetch.github = "nik-rev/countryfetch"
 [act3]
 src.github = "dhth/act3"
 fetch.github = "dhth/act3"
+
+[ttl]
+src.github = "lance0/ttl"
+fetch.github = "lance0/ttl"

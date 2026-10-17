@@ -147,6 +147,24 @@
         "type": "github"
       }
     },
+    "flake-parts_2": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1782949081,
+        "narHash": "sha256-vp6Y/Grm98ESt6ceOkWiHWyZRDV3J1RID4w+6NWK9yA=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "17c9d6cdfc60c64f4ee8d306f9bc0b4ccb51481e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -275,6 +293,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1782614948,
+        "narHash": "sha256-ePjCwr1sNm9NYUqywL7QfK3JnlS015msC+eBu2zKlp8=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "db3f255737b94216eb71cce308e2912cf6bc2d7c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
     "pwndbg": {
       "inputs": {
         "nixpkgs": [
@@ -360,6 +393,7 @@
         "nixpkgs": "nixpkgs",
         "pwndbg": "pwndbg",
         "treefmt-nix": "treefmt-nix_2",
+        "tuxedo": "tuxedo",
         "vortix": "vortix"
       }
     },
@@ -482,6 +516,27 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "tuxedo": {
+      "inputs": {
+        "flake-parts": "flake-parts_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789411917,
+        "narHash": "sha256-r0O9EhmEbW4uib58au/Tg7egyyKFU7iAAAiV97leN48=",
+        "owner": "webstonehq",
+        "repo": "tuxedo",
+        "rev": "de7c0dbbc78601ad5e742b7907ce24b809d65be3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "webstonehq",
+        "repo": "tuxedo",
         "type": "github"
       }
     },
